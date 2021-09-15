@@ -17,7 +17,16 @@ class App:
             if event.type == pg.QUIT:
                 return False
         (x, y) = pg.mouse.get_pos()
+        if self.board.hasMouse(x, y):
+            (row, column) = self.board.cartesianToGrid(x, y)
+        else:
+            (row, column) = (-1, -1)
         mouseLablel = App.TEXT_FONT.render(f"mouse: ({x}, {y})", True, PALETTE["red"], PALETTE["beige"])
+        gridLablel = App.TEXT_FONT.render(f"row: {row}, column: {column}", True, PALETTE["red"], PALETTE["beige"])
+
+        self.board.update()
+        self.board.handleMouseMovement()
+
 
         # draw
         SCREEN.fill(PALETTE["beige"])
@@ -27,6 +36,7 @@ class App:
         # targetSurface.blit(sourceSurface, upperleft)
         SCREEN.blit(self.TITLE, (275, -9))
         SCREEN.blit(mouseLablel, (400, 900))
+        SCREEN.blit(gridLablel, (400, 925))
         pg.display.update()
 
         # timing

@@ -19,6 +19,23 @@ class CandyPiece:
         self.x = x
         self.y = y
         self.type = type
+        self.mouseHover = False
+        self.neighbor = False
+
+    def setMouseHover(self, mouseHover):
+        self.mouseHover = mouseHover
+
+    def setNeighbor(self, neighbor):
+        self.neighbor = neighbor
+
+    def getCartesian(self):
+        return self.x, self.y
 
     def draw(self, surface):
+        color = PALETTE["beige"]
+        if self.neighbor and self.mouseHover:
+            color = PALETTE["red"]
+        if self.neighbor or self.mouseHover:
+            pg.draw.rect(surface, color, pg.Rect(self.x, self.y, PIECE_SIZE, PIECE_SIZE))
+
         surface.blit(CandyPiece.JEWELS[self.type], (self.x + 4, self.y + 4))
